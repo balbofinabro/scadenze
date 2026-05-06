@@ -294,17 +294,6 @@
   .modal h2 { font-size: 17px; font-weight: 700; margin-bottom: 16px; color: var(--gray-800); }
   .modal-close { float: right; background: var(--gray-100); border: none; border-radius: 50%; width: 30px; height: 30px; font-size: 16px; cursor: pointer; color: var(--gray-500); }
 
-  /* SETUP GUIDE */
-  .setup-step {
-    background: var(--gray-50);
-    border-radius: var(--radius-sm);
-    padding: 12px 14px;
-    margin-bottom: 8px;
-    border-left: 3px solid var(--blue);
-  }
-  .setup-step .step-n { font-size: 11px; font-weight: 700; color: var(--blue); text-transform: uppercase; }
-  .setup-step p { font-size: 13px; color: var(--gray-700); margin-top: 4px; line-height: 1.5; }
-  .setup-step code { background: var(--gray-200); padding: 1px 5px; border-radius: 4px; font-size: 12px; font-family: monospace; }
 
   /* TOAST */
   .toast {
@@ -435,7 +424,6 @@
   <button class="nav-btn active" onclick="setView('home',this)"><span>🏠</span>Scadenze</button>
   <button class="nav-btn" onclick="setView('done',this)"><span>✅</span>Archivio</button>
   <button class="nav-btn" onclick="openStats()"><span>📊</span>Riepilogo</button>
-  <button class="nav-btn" onclick="openSetup()"><span>⚙️</span>Setup</button>
 </div>
 
 </div><!-- end app-wrap -->
@@ -453,51 +441,6 @@
   </div>
 </div>
 
-<!-- SETUP MODAL -->
-<div class="modal-bg" id="modal-setup">
-  <div class="modal">
-    <div class="modal-handle"></div>
-    <button class="modal-close" onclick="closeModal('modal-setup')">✕</button>
-    <h2>⚙️ Setup & Installazione</h2>
-    <div id="setup-content">
-
-      <div class="setup-step">
-        <div class="step-n">Passo 1 — Firebase (sync cloud)</div>
-        <p>Vai su <strong>console.firebase.google.com</strong>, crea un progetto gratuito "scadenzario-balbusso", abilita <strong>Realtime Database</strong> in modalità test, poi torna qui e incolla la tua config nel campo sotto.</p>
-      </div>
-
-      <div class="field" style="padding:0 0 12px">
-        <label>Config Firebase (incolla il JSON)</label>
-        <textarea id="fb-config" placeholder='{"apiKey":"...","authDomain":"...","databaseURL":"...","projectId":"..."}' style="min-height:90px;font-size:12px;font-family:monospace"></textarea>
-      </div>
-      <button class="btn btn-primary" onclick="saveFirebaseConfig()" style="width:100%;margin-bottom:16px">Salva configurazione Firebase</button>
-
-      <div class="setup-step">
-        <div class="step-n">Passo 2 — Hosting gratuito su GitHub Pages</div>
-        <p>1. Crea un repository pubblico su <strong>github.com</strong> (es. <code>scadenzario</code>)<br>
-           2. Carica questo file <code>index.html</code> e <code>manifest.json</code> nella root<br>
-           3. Vai in Settings → Pages → Source: <code>main branch / root</code><br>
-           4. Il tuo URL sarà: <code>tuonome.github.io/scadenzario</code></p>
-      </div>
-
-      <div class="setup-step">
-        <div class="step-n">Passo 3 — Installa come app su iPhone</div>
-        <p>1. Apri l'URL su <strong>Safari</strong> (obbligatorio, non Chrome)<br>
-           2. Tocca il pulsante <strong>Condividi ⬆️</strong><br>
-           3. Scorri e tocca <strong>"Aggiungi a schermata Home"</strong><br>
-           4. L'app appare come icona nativa ✅</p>
-      </div>
-
-      <div class="setup-step">
-        <div class="step-n">Passo 4 — Installa su Windows (Chrome)</div>
-        <p>1. Apri l'URL su <strong>Chrome</strong><br>
-           2. Clicca l'icona <strong>⊕ Installa app</strong> nella barra indirizzi<br>
-           3. L'app si apre come finestra nativa, senza browser ✅</p>
-      </div>
-
-    </div>
-  </div>
-</div>
 
 <!-- Firebase SDK -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/9.23.0/firebase-app-compat.min.js"></script>
@@ -523,16 +466,22 @@ let recognition = null;
 let isRecording = false;
 
 /* ═══════════════════════════════════════════════
-   FIREBASE INIT
+   FIREBASE INIT — config incorporata
 ═══════════════════════════════════════════════ */
+const FIREBASE_CONFIG = {
+  apiKey: "AIzaSyD7dtQ8-AaLY29S6ExLeZp5ORj0nygDwD0",
+  authDomain: "balbo-6ffd0.firebaseapp.com",
+  databaseURL: "https://balbo-6ffd0-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "balbo-6ffd0",
+  storageBucket: "balbo-6ffd0.firebasestorage.app",
+  messagingSenderId: "636697484618",
+  appId: "1:636697484618:web:c2ff7f9004c005304735b3"
+};
+
 function initFirebase() {
   try {
-    const raw = localStorage.getItem('fb_config_balbusso');
-    if (!raw) { useFallbackStorage(); return; }
-    const cfg = JSON.parse(raw);
-    if (!firebase.apps.length) firebase.initializeApp(cfg);
+    if (!firebase.apps.length) firebase.initializeApp(FIREBASE_CONFIG);
     db = firebase.database();
-    // Listen attivo scadenze
     db.ref('scadenze').on('value', snap => {
       scadenze = snap.val() || {};
       render();
@@ -543,7 +492,7 @@ function initFirebase() {
     });
     updateSyncDot(true);
   } catch(e) {
-    console.warn('Firebase non configurato, uso localStorage.', e);
+    console.warn('Errore Firebase, uso localStorage.', e);
     useFallbackStorage();
   }
 }
@@ -849,23 +798,9 @@ function openStats() {
   document.getElementById('modal-stats').classList.add('open');
 }
 
-function openSetup() {
-  const raw = localStorage.getItem('fb_config_balbusso') || '';
-  document.getElementById('fb-config').value = raw;
-  document.getElementById('modal-setup').classList.add('open');
-}
 
 function closeModal(id) { document.getElementById(id).classList.remove('open'); }
 
-function saveFirebaseConfig() {
-  const raw = document.getElementById('fb-config').value.trim();
-  try {
-    JSON.parse(raw);
-    localStorage.setItem('fb_config_balbusso', raw);
-    showToast('✅ Config salvata — ricarica la pagina');
-    closeModal('modal-setup');
-  } catch(e) { showToast('⚠️ JSON non valido — controlla la config'); }
-}
 
 function showToast(msg) {
   const t = document.getElementById('toast');
