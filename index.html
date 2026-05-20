@@ -9,340 +9,242 @@
 <meta name="theme-color" content="#1a56db">
 <title>Scadenzario Balbusso</title>
 <link rel="manifest" href="manifest.json">
-
-<!-- PWA Icons placeholder - genera con realfavicongenerator.net -->
 <link rel="apple-touch-icon" href="icon-192.png">
-
 <style>
-  :root {
-    --blue: #1a56db;
-    --blue-light: #e8f0fe;
-    --blue-dark: #1240a8;
-    --red: #e02424;
-    --red-light: #fde8e8;
-    --amber: #c27803;
-    --amber-light: #fef3c7;
-    --green: #057a55;
-    --green-light: #def7ec;
-    --gray-50: #f9fafb;
-    --gray-100: #f3f4f6;
-    --gray-200: #e5e7eb;
-    --gray-400: #9ca3af;
-    --gray-500: #6b7280;
-    --gray-700: #374151;
-    --gray-800: #1f2937;
-    --gray-900: #111827;
-    --cat-fiscale: #1a56db;
-    --cat-lavoro: #057a55;
-    --cat-generico: #6b7280;
-    --radius: 12px;
-    --radius-sm: 8px;
-    --shadow: 0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.06);
-    --shadow-md: 0 4px 6px rgba(0,0,0,.07), 0 2px 4px rgba(0,0,0,.06);
-    --safe-top: env(safe-area-inset-top, 0px);
-    --safe-bottom: env(safe-area-inset-bottom, 0px);
-  }
+:root {
+  --blue:#1a56db;--blue-light:#e8f0fe;--blue-dark:#1240a8;
+  --red:#e02424;--red-light:#fde8e8;
+  --amber:#c27803;--amber-light:#fef3c7;
+  --green:#057a55;--green-light:#def7ec;
+  --gray-50:#f9fafb;--gray-100:#f3f4f6;--gray-200:#e5e7eb;
+  --gray-400:#9ca3af;--gray-500:#6b7280;--gray-700:#374151;--gray-800:#1f2937;
+  --radius:12px;--radius-sm:8px;
+  --shadow:0 1px 3px rgba(0,0,0,.08),0 1px 2px rgba(0,0,0,.06);
+  --shadow-md:0 4px 6px rgba(0,0,0,.07),0 2px 4px rgba(0,0,0,.06);
+  --safe-top:env(safe-area-inset-top,0px);--safe-bottom:env(safe-area-inset-bottom,0px);
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;background:#f0f4ff;color:var(--gray-800);min-height:100vh}
 
-  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+/* ── LOGIN ── */
+#login-screen{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:24px;background:linear-gradient(135deg,#1240a8 0%,#1a56db 60%,#3b82f6 100%)}
+.login-card{background:white;border-radius:20px;padding:36px 28px;width:100%;max-width:380px;box-shadow:0 20px 60px rgba(0,0,0,.25)}
+.login-logo{text-align:center;margin-bottom:24px}
+.login-logo .logo-icon{width:72px;height:72px;background:var(--blue);border-radius:18px;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;font-size:28px;font-weight:800;color:white;letter-spacing:-1px}
+.login-logo h1{font-size:20px;font-weight:700;color:var(--gray-800)}
+.login-logo p{font-size:13px;color:var(--gray-500);margin-top:4px}
+.login-field{margin-bottom:16px}
+.login-field label{font-size:12px;font-weight:600;color:var(--gray-500);text-transform:uppercase;letter-spacing:.4px;display:block;margin-bottom:6px}
+.login-field input{width:100%;border:1.5px solid var(--gray-200);border-radius:var(--radius-sm);padding:12px 14px;font-size:15px;color:var(--gray-800);background:var(--gray-50);font-family:inherit;transition:border-color .15s}
+.login-field input:focus{outline:none;border-color:var(--blue);background:white}
+.login-btn{width:100%;padding:14px;background:var(--blue);color:white;border:none;border-radius:var(--radius-sm);font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;transition:all .15s;margin-top:4px}
+.login-btn:hover{background:var(--blue-dark)}
+.login-btn:disabled{opacity:.6;cursor:not-allowed}
+.login-error{background:var(--red-light);color:var(--red);border-radius:var(--radius-sm);padding:10px 14px;font-size:13px;margin-top:12px;display:none}
+.login-forgot{text-align:center;margin-top:16px}
+.login-forgot a{font-size:13px;color:var(--blue);text-decoration:none;cursor:pointer}
+.login-forgot a:hover{text-decoration:underline}
 
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-    background: #f0f4ff;
-    color: var(--gray-800);
-    min-height: 100vh;
-    padding-bottom: calc(80px + var(--safe-bottom));
-  }
+/* ── RESET PASSWORD MODAL ── */
+.reset-bg{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;align-items:center;justify-content:center;z-index:200;padding:20px}
+.reset-bg.open{display:flex}
+.reset-card{background:white;border-radius:var(--radius);padding:28px;width:100%;max-width:360px}
+.reset-card h3{font-size:16px;font-weight:700;margin-bottom:8px}
+.reset-card p{font-size:13px;color:var(--gray-500);margin-bottom:16px;line-height:1.5}
+.reset-actions{display:flex;gap:8px;margin-top:16px}
 
-  /* HEADER */
-  .header {
-    background: var(--blue);
-    color: white;
-    padding: calc(16px + var(--safe-top)) 16px 16px;
-    position: sticky;
-    top: 0;
-    z-index: 50;
-    box-shadow: var(--shadow-md);
-  }
-  .header-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px; }
-  .header h1 { font-size: 18px; font-weight: 700; letter-spacing: -.3px; }
-  .header-date { font-size: 12px; opacity: .8; margin-top: 2px; }
-  .header-badges { display: flex; gap: 6px; }
-  .badge { background: rgba(255,255,255,.2); border-radius: 20px; padding: 4px 10px; font-size: 12px; font-weight: 600; }
-  .badge.urgent { background: var(--red); }
-  .sync-dot { width: 8px; height: 8px; border-radius: 50%; background: #4ade80; display: inline-block; margin-left: 6px; }
-  .sync-dot.offline { background: var(--amber); }
+/* ── CHANGE PASSWORD MODAL ── */
+.chpwd-bg{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;align-items:center;justify-content:center;z-index:200;padding:20px}
+.chpwd-bg.open{display:flex}
+.chpwd-card{background:white;border-radius:var(--radius);padding:28px;width:100%;max-width:360px}
+.chpwd-card h3{font-size:16px;font-weight:700;margin-bottom:16px}
 
-  /* ALERT BANNER */
-  .alert-banner {
-    margin: 12px 12px 0;
-    background: var(--amber-light);
-    border: 1px solid #fcd34d;
-    border-radius: var(--radius-sm);
-    padding: 10px 14px;
-    font-size: 13px;
-    color: #92400e;
-    display: none;
-  }
-  .alert-banner.urgent { background: var(--red-light); border-color: #fca5a5; color: #991b1b; }
+/* ── APP (hidden until logged in) ── */
+#app-screen{display:none;padding-bottom:calc(80px + var(--safe-bottom))}
 
-  /* STATS ROW */
-  .stats-row {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 8px;
-    padding: 12px;
-  }
-  .stat-card {
-    background: white;
-    border-radius: var(--radius-sm);
-    padding: 10px 8px;
-    text-align: center;
-    box-shadow: var(--shadow);
-  }
-  .stat-n { font-size: 24px; font-weight: 700; color: var(--gray-800); line-height: 1; }
-  .stat-n.amber { color: var(--amber); }
-  .stat-n.red { color: var(--red); }
-  .stat-l { font-size: 11px; color: var(--gray-500); margin-top: 4px; }
+.header{background:var(--blue);color:white;padding:calc(16px + var(--safe-top)) 16px 16px;position:sticky;top:0;z-index:50;box-shadow:var(--shadow-md)}
+.header-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px}
+.header h1{font-size:18px;font-weight:700;letter-spacing:-.3px}
+.header-date{font-size:12px;opacity:.8;margin-top:2px}
+.header-right{display:flex;gap:6px;align-items:center}
+.badge{background:rgba(255,255,255,.2);border-radius:20px;padding:4px 10px;font-size:12px;font-weight:600}
+.badge.urgent{background:var(--red)}
+.sync-dot{width:8px;height:8px;border-radius:50%;background:#4ade80;display:inline-block;margin-left:4px}
+.sync-dot.offline{background:var(--amber)}
+.logout-btn{background:rgba(255,255,255,.15);border:none;color:white;border-radius:var(--radius-sm);padding:6px 10px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit}
+.logout-btn:hover{background:rgba(255,255,255,.25)}
 
-  /* FILTER PILLS */
-  .filter-scroll {
-    overflow-x: auto;
-    white-space: nowrap;
-    padding: 0 12px 12px;
-    scrollbar-width: none;
-  }
-  .filter-scroll::-webkit-scrollbar { display: none; }
-  .pill {
-    display: inline-block;
-    padding: 6px 14px;
-    border-radius: 20px;
-    font-size: 13px;
-    font-weight: 500;
-    background: white;
-    color: var(--gray-500);
-    border: 1.5px solid var(--gray-200);
-    margin-right: 6px;
-    cursor: pointer;
-    transition: all .15s;
-  }
-  .pill.active { background: var(--blue); color: white; border-color: var(--blue); }
+.alert-banner{margin:12px 12px 0;background:var(--amber-light);border:1px solid #fcd34d;border-radius:var(--radius-sm);padding:10px 14px;font-size:13px;color:#92400e;display:none}
+.alert-banner.urgent{background:var(--red-light);border-color:#fca5a5;color:#991b1b}
 
-  /* FORM CARD */
-  .form-card {
-    background: white;
-    margin: 0 12px 12px;
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
-    overflow: hidden;
-  }
-  .form-header {
-    background: var(--blue-light);
-    padding: 12px 16px;
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--blue-dark);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    cursor: pointer;
-  }
-  .form-body { padding: 16px; display: none; }
-  .form-body.open { display: block; }
-  .field { margin-bottom: 12px; }
-  .field label { font-size: 12px; font-weight: 600; color: var(--gray-500); text-transform: uppercase; letter-spacing: .4px; display: block; margin-bottom: 5px; }
-  .field input, .field select, .field textarea {
-    width: 100%;
-    border: 1.5px solid var(--gray-200);
-    border-radius: var(--radius-sm);
-    padding: 10px 12px;
-    font-size: 15px;
-    color: var(--gray-800);
-    background: var(--gray-50);
-    font-family: inherit;
-    transition: border-color .15s;
-  }
-  .field input:focus, .field select:focus, .field textarea:focus {
-    outline: none;
-    border-color: var(--blue);
-    background: white;
-  }
-  .field textarea { resize: vertical; min-height: 70px; }
-  .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-  .btn-group { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px; }
-  .btn {
-    flex: 1;
-    min-width: 0;
-    padding: 11px 12px;
-    border-radius: var(--radius-sm);
-    font-size: 14px;
-    font-weight: 600;
-    border: none;
-    cursor: pointer;
-    transition: all .15s;
-    font-family: inherit;
-    text-align: center;
-  }
-  .btn-primary { background: var(--blue); color: white; }
-  .btn-primary:active { background: var(--blue-dark); }
-  .btn-voice { background: var(--green-light); color: var(--green); border: 1.5px solid #6ee7b7; }
-  .btn-voice.recording { background: var(--red-light); color: var(--red); border-color: #fca5a5; animation: pulse 1s infinite; }
-  .btn-ghost { background: var(--gray-100); color: var(--gray-700); }
-  @keyframes pulse { 0%,100%{opacity:1}50%{opacity:.6} }
+.stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:12px}
+.stat-card{background:white;border-radius:var(--radius-sm);padding:10px 8px;text-align:center;box-shadow:var(--shadow)}
+.stat-n{font-size:24px;font-weight:700;color:var(--gray-800);line-height:1}
+.stat-n.amber{color:var(--amber)}.stat-n.red{color:var(--red)}
+.stat-l{font-size:11px;color:var(--gray-500);margin-top:4px}
 
-  .voice-hint { font-size: 12px; color: var(--gray-500); margin-top: 8px; padding: 8px; background: var(--gray-50); border-radius: var(--radius-sm); display: none; line-height: 1.5; }
+.filter-scroll{overflow-x:auto;white-space:nowrap;padding:0 12px 12px;scrollbar-width:none}
+.filter-scroll::-webkit-scrollbar{display:none}
+.pill{display:inline-block;padding:6px 14px;border-radius:20px;font-size:13px;font-weight:500;background:white;color:var(--gray-500);border:1.5px solid var(--gray-200);margin-right:6px;cursor:pointer;transition:all .15s}
+.pill.active{background:var(--blue);color:white;border-color:var(--blue)}
 
-  /* SECTION HEADER */
-  .section-hdr {
-    padding: 4px 12px 8px;
-    font-size: 12px;
-    font-weight: 700;
-    color: var(--gray-400);
-    text-transform: uppercase;
-    letter-spacing: .6px;
-  }
+.form-card{background:white;margin:0 12px 12px;border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
+.form-header{background:var(--blue-light);padding:12px 16px;font-size:14px;font-weight:600;color:var(--blue-dark);display:flex;align-items:center;justify-content:space-between;cursor:pointer}
+.form-body{padding:16px;display:none}
+.form-body.open{display:block}
+.field{margin-bottom:12px}
+.field label{font-size:12px;font-weight:600;color:var(--gray-500);text-transform:uppercase;letter-spacing:.4px;display:block;margin-bottom:5px}
+.field input,.field select,.field textarea{width:100%;border:1.5px solid var(--gray-200);border-radius:var(--radius-sm);padding:10px 12px;font-size:15px;color:var(--gray-800);background:var(--gray-50);font-family:inherit;transition:border-color .15s}
+.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--blue);background:white}
+.field textarea{resize:vertical;min-height:70px}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.btn-group{display:flex;gap:8px;flex-wrap:wrap;margin-top:4px}
+.btn{flex:1;min-width:0;padding:11px 12px;border-radius:var(--radius-sm);font-size:14px;font-weight:600;border:none;cursor:pointer;transition:all .15s;font-family:inherit;text-align:center}
+.btn-primary{background:var(--blue);color:white}
+.btn-primary:active{background:var(--blue-dark)}
+.btn-voice{background:var(--green-light);color:var(--green);border:1.5px solid #6ee7b7}
+.btn-voice.recording{background:var(--red-light);color:var(--red);border-color:#fca5a5;animation:pulse 1s infinite}
+.btn-ghost{background:var(--gray-100);color:var(--gray-700)}
+.btn-sm{flex:none;padding:8px 14px;font-size:13px}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.6}}
+.voice-hint{font-size:12px;color:var(--gray-500);margin-top:8px;padding:8px;background:var(--gray-50);border-radius:var(--radius-sm);display:none;line-height:1.5}
 
-  /* SCADENZA CARDS */
-  .sc-list { padding: 0 12px; display: flex; flex-direction: column; gap: 8px; }
-  .sc-card {
-    background: white;
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
-    padding: 14px;
-    border-left: 4px solid var(--gray-200);
-    position: relative;
-    transition: box-shadow .15s;
-  }
-  .sc-card:active { box-shadow: var(--shadow-md); }
-  .sc-card.urgente { border-left-color: var(--red); }
-  .sc-card.presto { border-left-color: var(--amber); }
-  .sc-card.ok { border-left-color: var(--green); }
+.section-hdr{padding:4px 12px 8px;font-size:12px;font-weight:700;color:var(--gray-400);text-transform:uppercase;letter-spacing:.6px}
+.sc-list{padding:0 12px;display:flex;flex-direction:column;gap:8px}
+.sc-card{background:white;border-radius:var(--radius);box-shadow:var(--shadow);padding:14px;border-left:4px solid var(--gray-200);transition:box-shadow .15s}
+.sc-card.urgente{border-left-color:var(--red)}
+.sc-card.presto{border-left-color:var(--amber)}
+.sc-card.ok{border-left-color:var(--green)}
+.sc-top{display:flex;align-items:flex-start;gap:10px}
+.sc-cat-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.sc-main{flex:1;min-width:0}
+.sc-title{font-size:15px;font-weight:600;color:var(--gray-800);line-height:1.3}
+.sc-sub{font-size:12px;color:var(--gray-500);margin-top:3px;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.sc-days-badge{font-size:12px;font-weight:700;padding:3px 10px;border-radius:20px;white-space:nowrap}
+.sc-days-badge.red{background:var(--red-light);color:var(--red)}
+.sc-days-badge.amber{background:var(--amber-light);color:var(--amber)}
+.sc-days-badge.green{background:var(--green-light);color:var(--green)}
+.sc-notes{font-size:12px;color:var(--gray-500);margin-top:8px;padding-top:8px;border-top:1px solid var(--gray-100);font-style:italic}
+.sc-actions{display:flex;gap:6px;margin-top:10px}
+.sc-btn{flex:1;padding:8px 0;border-radius:var(--radius-sm);font-size:12px;font-weight:600;border:none;cursor:pointer;font-family:inherit;transition:all .15s}
+.sc-btn-edit{background:var(--blue-light);color:var(--blue)}
+.sc-btn-done{background:var(--green-light);color:var(--green)}
+.sc-btn-del{background:var(--red-light);color:var(--red)}
+.cat-label{display:inline-block;padding:2px 7px;border-radius:4px;font-size:11px;font-weight:600}
 
-  .sc-top { display: flex; align-items: flex-start; gap: 10px; }
-  .sc-cat-icon {
-    width: 36px; height: 36px; border-radius: 10px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 18px; flex-shrink: 0;
-  }
-  .sc-main { flex: 1; min-width: 0; }
-  .sc-title { font-size: 15px; font-weight: 600; color: var(--gray-800); line-height: 1.3; }
-  .sc-sub { font-size: 12px; color: var(--gray-500); margin-top: 3px; display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
-  .sc-days-badge {
-    font-size: 12px; font-weight: 700;
-    padding: 3px 10px; border-radius: 20px; white-space: nowrap;
-  }
-  .sc-days-badge.red { background: var(--red-light); color: var(--red); }
-  .sc-days-badge.amber { background: var(--amber-light); color: var(--amber); }
-  .sc-days-badge.green { background: var(--green-light); color: var(--green); }
+.empty{text-align:center;padding:40px 20px;color:var(--gray-400)}
+.empty-icon{font-size:48px;margin-bottom:12px}
 
-  .sc-notes { font-size: 12px; color: var(--gray-500); margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--gray-100); font-style: italic; }
-  .sc-actions { display: flex; gap: 6px; margin-top: 10px; }
-  .sc-btn {
-    flex: 1; padding: 8px 0; border-radius: var(--radius-sm);
-    font-size: 12px; font-weight: 600; border: none; cursor: pointer;
-    font-family: inherit; transition: all .15s;
-  }
-  .sc-btn-edit { background: var(--blue-light); color: var(--blue); }
-  .sc-btn-done { background: var(--green-light); color: var(--green); }
-  .sc-btn-del { background: var(--red-light); color: var(--red); }
-  .sc-btn:active { opacity: .7; }
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;background:white;border-top:1px solid var(--gray-200);display:flex;padding:8px 0 calc(8px + var(--safe-bottom));z-index:50;box-shadow:0 -2px 10px rgba(0,0,0,.06)}
+.nav-btn{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;padding:4px 0;border:none;background:none;color:var(--gray-400);font-family:inherit;font-size:11px;font-weight:500;transition:color .15s}
+.nav-btn.active{color:var(--blue)}
+.nav-btn span{font-size:22px}
 
-  .cat-label {
-    display: inline-block; padding: 2px 7px; border-radius: 4px;
-    font-size: 11px; font-weight: 600;
-  }
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;align-items:flex-end;justify-content:center;z-index:100;padding:0}
+.modal-bg.open{display:flex}
+.modal{background:white;border-radius:20px 20px 0 0;padding:20px 20px calc(20px + var(--safe-bottom));width:100%;max-width:600px;max-height:80vh;overflow-y:auto}
+.modal-handle{width:36px;height:4px;background:var(--gray-200);border-radius:2px;margin:0 auto 16px}
+.modal h2{font-size:17px;font-weight:700;margin-bottom:16px;color:var(--gray-800)}
+.modal-close{float:right;background:var(--gray-100);border:none;border-radius:50%;width:30px;height:30px;font-size:16px;cursor:pointer;color:var(--gray-500)}
 
-  /* EMPTY STATE */
-  .empty { text-align: center; padding: 40px 20px; color: var(--gray-400); }
-  .empty-icon { font-size: 48px; margin-bottom: 12px; }
-  .empty p { font-size: 14px; }
+.toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:var(--gray-800);color:white;padding:10px 20px;border-radius:20px;font-size:13px;font-weight:500;opacity:0;transition:opacity .3s;z-index:300;white-space:nowrap;pointer-events:none}
+.toast.show{opacity:1}
 
-  /* BOTTOM NAV */
-  .bottom-nav {
-    position: fixed;
-    bottom: 0; left: 0; right: 0;
-    background: white;
-    border-top: 1px solid var(--gray-200);
-    display: flex;
-    padding: 8px 0 calc(8px + var(--safe-bottom));
-    z-index: 50;
-    box-shadow: 0 -2px 10px rgba(0,0,0,.06);
-  }
-  .nav-btn {
-    flex: 1; display: flex; flex-direction: column; align-items: center;
-    gap: 3px; cursor: pointer; padding: 4px 0; border: none;
-    background: none; color: var(--gray-400); font-family: inherit;
-    font-size: 11px; font-weight: 500; transition: color .15s;
-  }
-  .nav-btn.active { color: var(--blue); }
-  .nav-btn span { font-size: 22px; }
-
-  /* MODAL */
-  .modal-bg {
-    position: fixed; inset: 0; background: rgba(0,0,0,.5);
-    display: none; align-items: flex-end; justify-content: center;
-    z-index: 100; padding: 0;
-  }
-  .modal-bg.open { display: flex; }
-  .modal {
-    background: white;
-    border-radius: 20px 20px 0 0;
-    padding: 20px 20px calc(20px + var(--safe-bottom));
-    width: 100%; max-width: 600px;
-    max-height: 80vh; overflow-y: auto;
-  }
-  .modal-handle { width: 36px; height: 4px; background: var(--gray-200); border-radius: 2px; margin: 0 auto 16px; }
-  .modal h2 { font-size: 17px; font-weight: 700; margin-bottom: 16px; color: var(--gray-800); }
-  .modal-close { float: right; background: var(--gray-100); border: none; border-radius: 50%; width: 30px; height: 30px; font-size: 16px; cursor: pointer; color: var(--gray-500); }
-
-
-  /* TOAST */
-  .toast {
-    position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%);
-    background: var(--gray-800); color: white; padding: 10px 20px;
-    border-radius: 20px; font-size: 13px; font-weight: 500;
-    opacity: 0; transition: opacity .3s; z-index: 200; white-space: nowrap;
-    pointer-events: none;
-  }
-  .toast.show { opacity: 1; }
-
-  /* DESKTOP */
-  @media (min-width: 600px) {
-    body { background: #e8eef8; }
-    .app-wrap { max-width: 580px; margin: 0 auto; }
-    .header { border-radius: 0 0 16px 16px; }
-    body { padding-bottom: 100px; }
-  }
+@media(min-width:600px){body{background:#e8eef8}.app-wrap{max-width:580px;margin:0 auto}.header{border-radius:0 0 16px 16px}}
 </style>
 </head>
 <body>
 
-<div class="app-wrap">
-
-<!-- HEADER -->
-<div class="header">
-  <div class="header-top">
-    <div>
-      <h1>📋 Scadenzario <span id="sync-dot" class="sync-dot offline" title="Stato sync"></span></h1>
-      <div class="header-date" id="hdr-date"></div>
+<!-- ══════════════ LOGIN SCREEN ══════════════ -->
+<div id="login-screen">
+  <div class="login-card">
+    <div class="login-logo">
+      <div class="logo-icon">CB</div>
+      <h1>Scadenzario</h1>
+      <p>Finabro Insurance Broker</p>
     </div>
-    <div class="header-badges">
-      <span class="badge urgent" id="badge-urgent" style="display:none"></span>
-      <span class="badge" id="badge-total"></span>
+    <div class="login-field">
+      <label>Email</label>
+      <input type="email" id="login-email" placeholder="claudiobalbusso@finabro.it" autocomplete="email">
+    </div>
+    <div class="login-field">
+      <label>Password</label>
+      <input type="password" id="login-pwd" placeholder="••••••••" autocomplete="current-password">
+    </div>
+    <button class="login-btn" id="login-btn" onclick="doLogin()">Accedi</button>
+    <div class="login-error" id="login-error"></div>
+    <div class="login-forgot">
+      <a onclick="openReset()">Password dimenticata?</a>
     </div>
   </div>
 </div>
 
-<!-- ALERT BANNER -->
+<!-- ══════════════ RESET PASSWORD ══════════════ -->
+<div class="reset-bg" id="reset-bg">
+  <div class="reset-card">
+    <h3>🔑 Recupera password</h3>
+    <p>Inserisci la tua email: ti mandiamo un link per reimpostare la password.</p>
+    <div class="login-field">
+      <label>Email</label>
+      <input type="email" id="reset-email" placeholder="claudiobalbusso@finabro.it">
+    </div>
+    <div class="reset-actions">
+      <button class="btn btn-ghost btn-sm" onclick="closeReset()">Annulla</button>
+      <button class="btn btn-primary btn-sm" onclick="doReset()">Invia email</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ CHANGE PASSWORD ══════════════ -->
+<div class="chpwd-bg" id="chpwd-bg">
+  <div class="chpwd-card">
+    <h3>🔐 Cambia password</h3>
+    <div class="login-field">
+      <label>Password attuale</label>
+      <input type="password" id="chpwd-old" placeholder="••••••••">
+    </div>
+    <div class="login-field">
+      <label>Nuova password</label>
+      <input type="password" id="chpwd-new" placeholder="••••••••">
+    </div>
+    <div class="login-field">
+      <label>Conferma nuova password</label>
+      <input type="password" id="chpwd-confirm" placeholder="••••••••">
+    </div>
+    <div class="login-error" id="chpwd-error"></div>
+    <div class="reset-actions">
+      <button class="btn btn-ghost btn-sm" onclick="closeChpwd()">Annulla</button>
+      <button class="btn btn-primary btn-sm" onclick="doChangePassword()">Salva</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ APP SCREEN ══════════════ -->
+<div id="app-screen">
+<div class="app-wrap">
+
+<div class="header">
+  <div class="header-top">
+    <div>
+      <h1>📋 Scadenzario <span id="sync-dot" class="sync-dot offline"></span></h1>
+      <div class="header-date" id="hdr-date"></div>
+    </div>
+    <div class="header-right">
+      <span class="badge urgent" id="badge-urgent" style="display:none"></span>
+      <span class="badge" id="badge-total"></span>
+      <button class="logout-btn" onclick="doLogout()">Esci</button>
+    </div>
+  </div>
+</div>
+
 <div class="alert-banner" id="alert-banner"></div>
 
-<!-- STATS -->
 <div class="stats-row">
   <div class="stat-card"><div class="stat-n" id="s-tot">0</div><div class="stat-l">Totali</div></div>
   <div class="stat-card"><div class="stat-n amber" id="s-week">0</div><div class="stat-l">Questa settimana</div></div>
   <div class="stat-card"><div class="stat-n red" id="s-over">0</div><div class="stat-l">Scadute</div></div>
 </div>
 
-<!-- FILTER PILLS -->
 <div class="filter-scroll">
   <span class="pill active" onclick="setFilter('tutte',this)">Tutte</span>
   <span class="pill" onclick="setFilter('fiscale',this)">💼 Fiscale</span>
@@ -350,7 +252,6 @@
   <span class="pill" onclick="setFilter('generico',this)">📌 Generico</span>
 </div>
 
-<!-- FORM (collapsible) -->
 <div class="form-card">
   <div class="form-header" onclick="toggleForm()" id="form-hdr">
     <span id="form-hdr-txt">＋ Nuova scadenza</span>
@@ -362,14 +263,8 @@
       <input id="f-title" placeholder="es. Versamento IVA trimestrale" autocomplete="off">
     </div>
     <div class="field-row">
-      <div class="field">
-        <label>Data *</label>
-        <input id="f-date" type="date">
-      </div>
-      <div class="field">
-        <label>Ora (opz.)</label>
-        <input id="f-time" type="time">
-      </div>
+      <div class="field"><label>Data *</label><input id="f-date" type="date"></div>
+      <div class="field"><label>Ora (opz.)</label><input id="f-time" type="time"></div>
     </div>
     <div class="field-row">
       <div class="field">
@@ -404,14 +299,11 @@
     </div>
     <div class="voice-hint" id="voice-hint">
       <strong>Come usare la voce:</strong><br>
-      Parla chiaramente in italiano. Esempio:<br>
-      <em>"Versamento INPS sedici agosto categoria fiscale"</em><br>
-      Il sistema riconosce data, categoria e titolo automaticamente.
+      Es: <em>"Versamento INPS sedici agosto categoria fiscale"</em>
     </div>
   </div>
 </div>
 
-<!-- LIST -->
 <div class="section-hdr" id="list-hdr">Scadenze attive</div>
 <div class="sc-list" id="sc-list"></div>
 <div class="empty" id="empty" style="display:none">
@@ -419,14 +311,15 @@
   <p>Nessuna scadenza in questa categoria.</p>
 </div>
 
-<!-- BOTTOM NAV -->
 <div class="bottom-nav">
   <button class="nav-btn active" onclick="setView('home',this)"><span>🏠</span>Scadenze</button>
   <button class="nav-btn" onclick="setView('done',this)"><span>✅</span>Archivio</button>
   <button class="nav-btn" onclick="openStats()"><span>📊</span>Riepilogo</button>
+  <button class="nav-btn" onclick="openChpwd()"><span>🔐</span>Password</button>
 </div>
 
-</div><!-- end app-wrap -->
+</div><!-- app-wrap -->
+</div><!-- app-screen -->
 
 <!-- TOAST -->
 <div class="toast" id="toast"></div>
@@ -441,33 +334,15 @@
   </div>
 </div>
 
-
 <!-- Firebase SDK -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/9.23.0/firebase-app-compat.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/9.23.0/firebase-database-compat.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/9.23.0/firebase-auth-compat.min.js"></script>
 
 <script>
-/* ═══════════════════════════════════════════════
-   CONFIG & STATE
-═══════════════════════════════════════════════ */
-const CATS = {
-  fiscale:      { label:'Fiscale',      icon:'💼', color:'#1a56db' },
-  lavoro:       { label:'Lavoro',       icon:'📁', color:'#057a55' },
-  generico:     { label:'Generico',     icon:'📌', color:'#6b7280' }
-};
-
-let db = null;
-let scadenze = {};       // { id: {…} }
-let scadenzeArchivio = {};
-let filterCat = 'tutte';
-let currentView = 'home';
-let editId = null;
-let recognition = null;
-let isRecording = false;
-
-/* ═══════════════════════════════════════════════
-   FIREBASE INIT — config incorporata
-═══════════════════════════════════════════════ */
+/* ══════════════════════════════════════════════
+   FIREBASE CONFIG
+══════════════════════════════════════════════ */
 const FIREBASE_CONFIG = {
   apiKey: "AIzaSyD7dtQ8-AaLY29S6ExLeZp5ORj0nygDwD0",
   authDomain: "balbo-6ffd0.firebaseapp.com",
@@ -478,440 +353,423 @@ const FIREBASE_CONFIG = {
   appId: "1:636697484618:web:c2ff7f9004c005304735b3"
 };
 
-function initFirebase() {
-  try {
-    if (!firebase.apps.length) firebase.initializeApp(FIREBASE_CONFIG);
-    db = firebase.database();
+firebase.initializeApp(FIREBASE_CONFIG);
+const auth = firebase.auth();
+const db   = firebase.database();
+
+/* ══════════════════════════════════════════════
+   AUTH
+══════════════════════════════════════════════ */
+auth.onAuthStateChanged(user => {
+  if (user) {
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('app-screen').style.display   = 'block';
+    startApp();
+  } else {
+    document.getElementById('login-screen').style.display = 'flex';
+    document.getElementById('app-screen').style.display   = 'none';
+  }
+});
+
+function doLogin() {
+  const email = document.getElementById('login-email').value.trim();
+  const pwd   = document.getElementById('login-pwd').value;
+  const btn   = document.getElementById('login-btn');
+  const err   = document.getElementById('login-error');
+  if (!email || !pwd) { showLoginError('Inserisci email e password.'); return; }
+  btn.disabled = true;
+  btn.textContent = 'Accesso in corso...';
+  err.style.display = 'none';
+  auth.signInWithEmailAndPassword(email, pwd)
+    .catch(e => {
+      btn.disabled = false;
+      btn.textContent = 'Accedi';
+      const msg = e.code === 'auth/wrong-password' || e.code === 'auth/user-not-found' || e.code === 'auth/invalid-credential'
+        ? 'Email o password non corretti.' : 'Errore di accesso. Riprova.';
+      showLoginError(msg);
+    });
+}
+
+function doLogout() {
+  if (confirm('Vuoi uscire dall\'app?')) auth.signOut();
+}
+
+function showLoginError(msg) {
+  const err = document.getElementById('login-error');
+  err.textContent = msg;
+  err.style.display = 'block';
+}
+
+// Invio con tasto Enter
+document.getElementById('login-pwd').addEventListener('keydown', e => {
+  if (e.key === 'Enter') doLogin();
+});
+document.getElementById('login-email').addEventListener('keydown', e => {
+  if (e.key === 'Enter') document.getElementById('login-pwd').focus();
+});
+
+/* ── Password dimenticata ── */
+function openReset() {
+  document.getElementById('reset-email').value = document.getElementById('login-email').value;
+  document.getElementById('reset-bg').classList.add('open');
+}
+function closeReset() { document.getElementById('reset-bg').classList.remove('open'); }
+function doReset() {
+  const email = document.getElementById('reset-email').value.trim();
+  if (!email) { alert('Inserisci la tua email.'); return; }
+  auth.sendPasswordResetEmail(email)
+    .then(() => {
+      closeReset();
+      showLoginError('✅ Email di reset inviata! Controlla la casella di posta.');
+      document.getElementById('login-error').style.background = '#def7ec';
+      document.getElementById('login-error').style.color = '#057a55';
+      document.getElementById('login-error').style.display = 'block';
+    })
+    .catch(() => { alert('Errore: verifica che l\'email sia corretta.'); });
+}
+
+/* ── Cambia password ── */
+function openChpwd() { document.getElementById('chpwd-bg').classList.add('open'); }
+function closeChpwd() {
+  document.getElementById('chpwd-bg').classList.remove('open');
+  document.getElementById('chpwd-old').value = '';
+  document.getElementById('chpwd-new').value = '';
+  document.getElementById('chpwd-confirm').value = '';
+  document.getElementById('chpwd-error').style.display = 'none';
+}
+function doChangePassword() {
+  const oldPwd  = document.getElementById('chpwd-old').value;
+  const newPwd  = document.getElementById('chpwd-new').value;
+  const confirm = document.getElementById('chpwd-confirm').value;
+  const errEl   = document.getElementById('chpwd-error');
+  errEl.style.display = 'none';
+  if (!oldPwd || !newPwd || !confirm) { showChpwdError('Compila tutti i campi.'); return; }
+  if (newPwd !== confirm) { showChpwdError('Le nuove password non coincidono.'); return; }
+  if (newPwd.length < 6) { showChpwdError('La password deve essere di almeno 6 caratteri.'); return; }
+  const user = auth.currentUser;
+  const credential = firebase.auth.EmailAuthProvider.credential(user.email, oldPwd);
+  user.reauthenticateWithCredential(credential)
+    .then(() => user.updatePassword(newPwd))
+    .then(() => {
+      closeChpwd();
+      showToast('✅ Password aggiornata con successo!');
+    })
+    .catch(e => {
+      if (e.code === 'auth/wrong-password' || e.code === 'auth/invalid-credential') {
+        showChpwdError('Password attuale non corretta.');
+      } else {
+        showChpwdError('Errore: ' + e.message);
+      }
+    });
+}
+function showChpwdError(msg) {
+  const el = document.getElementById('chpwd-error');
+  el.textContent = msg;
+  el.style.display = 'block';
+}
+
+/* ══════════════════════════════════════════════
+   APP DATA & STATE
+══════════════════════════════════════════════ */
+const CATS = {
+  fiscale:  { label:'Fiscale',  icon:'💼', color:'#1a56db' },
+  lavoro:   { label:'Lavoro',   icon:'📁', color:'#057a55' },
+  generico: { label:'Generico', icon:'📌', color:'#6b7280' }
+};
+
+let scadenze = {};
+let scadenzeArchivio = {};
+let filterCat = 'tutte';
+let currentView = 'home';
+let editId = null;
+let recognition = null;
+let isRecording = false;
+let dbListenersOn = false;
+
+function startApp() {
+  document.getElementById('f-date').value = new Date().toISOString().slice(0,10);
+  if (!dbListenersOn) {
+    dbListenersOn = true;
     db.ref('scadenze').on('value', snap => {
       scadenze = snap.val() || {};
       render();
-      updateSyncDot(true);
+      document.getElementById('sync-dot').className = 'sync-dot';
     });
     db.ref('archivio').on('value', snap => {
       scadenzeArchivio = snap.val() || {};
     });
-    updateSyncDot(true);
-  } catch(e) {
-    console.warn('Errore Firebase, uso localStorage.', e);
-    useFallbackStorage();
   }
 }
 
-function useFallbackStorage() {
-  try { scadenze = JSON.parse(localStorage.getItem('scad_active') || '{}'); } catch(e) {}
-  try { scadenzeArchivio = JSON.parse(localStorage.getItem('scad_done') || '{}'); } catch(e) {}
-  if (!Object.keys(scadenze).length) seedDemo();
-  render();
-  updateSyncDot(false);
-}
-
-function syncSave() {
-  if (db) {
-    db.ref('scadenze').set(scadenze);
-  } else {
-    localStorage.setItem('scad_active', JSON.stringify(scadenze));
-    localStorage.setItem('scad_done', JSON.stringify(scadenzeArchivio));
-    render();
-  }
-}
-
-function syncArchive() {
-  if (db) {
-    db.ref('archivio').set(scadenzeArchivio);
-  } else {
-    localStorage.setItem('scad_done', JSON.stringify(scadenzeArchivio));
-  }
-}
-
-function updateSyncDot(online) {
-  const dot = document.getElementById('sync-dot');
-  dot.className = 'sync-dot' + (online ? '' : ' offline');
-  dot.title = online ? 'Sincronizzato con Firebase' : 'Salvataggio locale (configura Firebase per sync)';
-}
-
-/* ═══════════════════════════════════════════════
-   DATA
-═══════════════════════════════════════════════ */
+/* ══════════════════════════════════════════════
+   DATA HELPERS
+══════════════════════════════════════════════ */
 function newId() { return 'sc_' + Date.now() + '_' + Math.floor(Math.random()*10000); }
-
 function today() { return new Date(new Date().toDateString()); }
-
-function daysTo(dateStr) {
-  const d = new Date(dateStr + 'T00:00:00');
-  return Math.round((d - today()) / 86400000);
+function daysTo(d) { return Math.round((new Date(d+'T00:00:00') - today()) / 86400000); }
+function formatDate(d) {
+  return new Date(d+'T00:00:00').toLocaleDateString('it-IT',{weekday:'short',day:'numeric',month:'short',year:'numeric'});
 }
 
-function formatDate(dateStr) {
-  return new Date(dateStr + 'T00:00:00').toLocaleDateString('it-IT', {
-    weekday:'short', day:'numeric', month:'short', year:'numeric'
-  });
-}
-
-function seedDemo() {
-  const add = (days, title, cat, notes, alert) => {
-    const d = new Date(); d.setDate(d.getDate() + days);
-    const id = newId();
-    scadenze[id] = { id, title, date: d.toISOString().slice(0,10), cat, notes: notes||'', alert: alert||'both', ts: Date.now() };
-  };
-  add(1,  'Scadenza F24 — IVA mensile',                  'fiscale',      'Importo stimato: € 1.200', 'both');
-  add(2,  'Versamento F24 — IVA trimestrale',             'fiscale',      'Importo stimato: € 3.450', 'both');
-  add(5,  'Rinnovo contratto collaboratore',              'lavoro',       'Verificare documentazione', 'both');
-  add(7,  'Invio mod. 730 collaboratori',                 'fiscale',      '', 'both');
-  add(12, 'Riunione ABI — Milano, ore 10:00',             'lavoro',       'Portare reportistica Q2', 'both');
-  add(20, 'Revisione portafoglio clienti — Q3',           'lavoro',       '', '7');
-  add(28, 'Scadenza INPS artigiani',                      'fiscale',      'F24 precompilato', 'both');
-  add(-2, 'Pagamento INAIL — quota annua',                'fiscale',      '⚠ Verificare se già pagato', 'both');
-  add(45, 'Appuntamento studio commercialista',           'generico',     'Portare documentazione Q2', '7');
-  add(60, 'Rinnovo iscrizione Ivass',                     'lavoro',       'Crediti formativi ok', '14');
-}
-
-/* ═══════════════════════════════════════════════
+/* ══════════════════════════════════════════════
    RENDER
-═══════════════════════════════════════════════ */
+══════════════════════════════════════════════ */
 function render() {
-  // header date
   document.getElementById('hdr-date').textContent = new Date().toLocaleDateString('it-IT',{
-    weekday:'long', day:'numeric', month:'long', year:'numeric'
+    weekday:'long',day:'numeric',month:'long',year:'numeric'
   });
-
-  const arr = Object.values(currentView === 'home' ? scadenze : scadenzeArchivio)
-    .sort((a,b) => a.date.localeCompare(b.date));
-
-  // stats (always from active)
+  const arr = Object.values(currentView==='home' ? scadenze : scadenzeArchivio)
+    .sort((a,b)=>a.date.localeCompare(b.date));
   const active = Object.values(scadenze);
-  const tot = active.length;
-  const week = active.filter(s => { const n=daysTo(s.date); return n>=0 && n<=7; }).length;
-  const over = active.filter(s => daysTo(s.date) < 0).length;
-  document.getElementById('s-tot').textContent = tot;
-  document.getElementById('s-week').textContent = week;
-  document.getElementById('s-over').textContent = over;
+  document.getElementById('s-tot').textContent  = active.length;
+  document.getElementById('s-week').textContent = active.filter(s=>{const n=daysTo(s.date);return n>=0&&n<=7;}).length;
+  document.getElementById('s-over').textContent = active.filter(s=>daysTo(s.date)<0).length;
 
-  // badge
-  const urgenti = active.filter(s => { const n=daysTo(s.date); return n>=0 && n<=2; });
+  const urgenti = active.filter(s=>{const n=daysTo(s.date);return n>=0&&n<=2;});
   const badgeU = document.getElementById('badge-urgent');
-  const badgeT = document.getElementById('badge-total');
-  badgeT.textContent = tot + ' scadenze';
+  document.getElementById('badge-total').textContent = active.length+' scadenze';
   if (urgenti.length) { badgeU.textContent='⚠ '+urgenti.length+' urgenti'; badgeU.style.display='inline'; }
   else badgeU.style.display='none';
 
-  // alert banner
-  const banner = document.getElementById('alert-banner');
-  const presto7 = active.filter(s => { const n=daysTo(s.date); return n>=0 && n<=7; });
+  const presto7 = active.filter(s=>{const n=daysTo(s.date);return n>=0&&n<=7;});
+  const banner  = document.getElementById('alert-banner');
   if (presto7.length && currentView==='home') {
-    const urgStr = urgenti.length ? `<strong>${urgenti.length} URGENTI entro 2 giorni</strong>: ${urgenti.map(s=>s.title).slice(0,2).join(', ')}${urgenti.length>2?'…':''}. ` : '';
-    banner.innerHTML = (urgenti.length ? '🔴 ' : '🟡 ') + urgStr + `${presto7.length} scadenz${presto7.length>1?'e':'a'} in arrivo questa settimana.`;
+    const urgStr = urgenti.length ? `<strong>${urgenti.length} URGENTI entro 2 giorni</strong>: ${urgenti.map(s=>s.title).slice(0,2).join(', ')}. ` : '';
+    banner.innerHTML = (urgenti.length?'🔴 ':'🟡 ') + urgStr + `${presto7.length} scadenz${presto7.length>1?'e':'a'} in arrivo questa settimana.`;
     banner.style.display = 'block';
-    banner.className = 'alert-banner' + (urgenti.length ? ' urgent' : '');
-  } else {
-    banner.style.display = 'none';
-  }
+    banner.className = 'alert-banner'+(urgenti.length?' urgent':'');
+  } else banner.style.display='none';
 
-  // filter & display
-  let filtered = filterCat==='tutte' ? arr : arr.filter(s=>s.cat===filterCat);
-  const list = document.getElementById('sc-list');
+  const filtered = filterCat==='tutte' ? arr : arr.filter(s=>s.cat===filterCat);
+  const list  = document.getElementById('sc-list');
   const empty = document.getElementById('empty');
-
   document.getElementById('list-hdr').textContent = currentView==='home' ? 'Scadenze attive' : 'Archivio completate';
 
-  if (!filtered.length) {
-    list.innerHTML = '';
-    empty.style.display = 'block';
-    return;
-  }
-  empty.style.display = 'none';
+  if (!filtered.length) { list.innerHTML=''; empty.style.display='block'; return; }
+  empty.style.display='none';
 
-  list.innerHTML = filtered.map(s => {
-    const n = daysTo(s.date);
-    const urgClass = n < 0 ? 'urgente' : n <= 2 ? 'urgente' : n <= 7 ? 'presto' : 'ok';
-    const daysBadge = n < 0 ? {text: `Scaduta ${Math.abs(n)} giorni fa`, cls:'red'}
-      : n === 0 ? {text:'⚡ Scade OGGI', cls:'red'}
-      : n === 1 ? {text:'⚡ Domani', cls:'red'}
-      : n <= 7  ? {text:`${n} giorni`, cls:'amber'}
-      : {text:`${n} giorni`, cls:'green'};
-    const cat = CATS[s.cat] || CATS.generico;
-    const actions = currentView === 'home'
-      ? `<div class="sc-actions">
-           <button class="sc-btn sc-btn-edit" onclick="editScadenza('${s.id}')">✏️ Modifica</button>
-           <button class="sc-btn sc-btn-done" onclick="completaScadenza('${s.id}')">✓ Fatto</button>
-           <button class="sc-btn sc-btn-del" onclick="eliminaScadenza('${s.id}')">🗑 Elimina</button>
-         </div>`
-      : `<div class="sc-actions">
-           <button class="sc-btn sc-btn-edit" onclick="ripristinaScadenza('${s.id}')">↩ Ripristina</button>
-           <button class="sc-btn sc-btn-del" onclick="eliminaArchiviato('${s.id}')">🗑 Elimina</button>
-         </div>`;
+  list.innerHTML = filtered.map(s=>{
+    const n=daysTo(s.date);
+    const urgClass=n<0?'urgente':n<=2?'urgente':n<=7?'presto':'ok';
+    const lbl=n<0?{text:`Scaduta ${Math.abs(n)}g fa`,cls:'red'}:n===0?{text:'⚡ Scade OGGI',cls:'red'}:n===1?{text:'⚡ Domani',cls:'red'}:n<=7?{text:`${n} giorni`,cls:'amber'}:{text:`${n} giorni`,cls:'green'};
+    const cat=CATS[s.cat]||CATS.generico;
+    const actions=currentView==='home'
+      ?`<div class="sc-actions">
+          <button class="sc-btn sc-btn-edit" onclick="editScadenza('${s.id}')">✏️ Modifica</button>
+          <button class="sc-btn sc-btn-done" onclick="completaScadenza('${s.id}')">✓ Fatto</button>
+          <button class="sc-btn sc-btn-del"  onclick="eliminaScadenza('${s.id}')">🗑 Elimina</button>
+        </div>`
+      :`<div class="sc-actions">
+          <button class="sc-btn sc-btn-edit" onclick="ripristinaScadenza('${s.id}')">↩ Ripristina</button>
+          <button class="sc-btn sc-btn-del"  onclick="eliminaArchiviato('${s.id}')">🗑 Elimina</button>
+        </div>`;
     return `<div class="sc-card ${urgClass}">
       <div class="sc-top">
         <div class="sc-cat-icon" style="background:${cat.color}22">${cat.icon}</div>
         <div class="sc-main">
-          <div class="sc-title">${escHtml(s.title)}</div>
+          <div class="sc-title">${esc(s.title)}</div>
           <div class="sc-sub">
             <span class="cat-label" style="background:${cat.color}18;color:${cat.color}">${cat.label}</span>
             <span>📅 ${formatDate(s.date)}${s.time?' 🕐 '+s.time:''}</span>
-            <span class="sc-days-badge ${daysBadge.cls}">${daysBadge.text}</span>
+            <span class="sc-days-badge ${lbl.cls}">${lbl.text}</span>
           </div>
         </div>
       </div>
-      ${s.notes ? `<div class="sc-notes">📝 ${escHtml(s.notes)}</div>` : ''}
+      ${s.notes?`<div class="sc-notes">📝 ${esc(s.notes)}</div>`:''}
       ${actions}
     </div>`;
   }).join('');
 }
 
-/* ═══════════════════════════════════════════════
-   ACTIONS
-═══════════════════════════════════════════════ */
+/* ══════════════════════════════════════════════
+   CRUD
+══════════════════════════════════════════════ */
 function saveScadenza() {
-  const title = document.getElementById('f-title').value.trim();
-  const date  = document.getElementById('f-date').value;
-  if (!title || !date) { showToast('⚠️ Inserisci titolo e data!'); return; }
-  const obj = {
-    id: editId || newId(),
-    title,
-    date,
-    time:  document.getElementById('f-time').value || '',
-    cat:   document.getElementById('f-cat').value,
-    alert: document.getElementById('f-alert').value,
-    notes: document.getElementById('f-notes').value.trim(),
-    ts:    Date.now()
+  const title=document.getElementById('f-title').value.trim();
+  const date =document.getElementById('f-date').value;
+  if (!title||!date) { showToast('⚠️ Inserisci titolo e data!'); return; }
+  const obj={
+    id:editId||newId(), title, date,
+    time:document.getElementById('f-time').value||'',
+    cat:document.getElementById('f-cat').value,
+    alert:document.getElementById('f-alert').value,
+    notes:document.getElementById('f-notes').value.trim(),
+    ts:Date.now()
   };
-  scadenze[obj.id] = obj;
-  syncSave();
-  showToast(editId ? '✅ Scadenza aggiornata' : '✅ Scadenza salvata');
-  clearForm();
-  toggleForm(false);
+  scadenze[obj.id]=obj;
+  db.ref('scadenze').set(scadenze);
+  showToast(editId?'✅ Scadenza aggiornata':'✅ Scadenza salvata');
+  clearForm(); toggleForm(false);
 }
 
 function clearForm() {
-  document.getElementById('f-title').value  = '';
-  document.getElementById('f-date').value   = new Date().toISOString().slice(0,10);
-  document.getElementById('f-time').value   = '';
-  document.getElementById('f-notes').value  = '';
-  document.getElementById('f-cat').value    = 'generico';
-  document.getElementById('f-alert').value  = 'both';
-  document.getElementById('form-hdr-txt').textContent = '＋ Nuova scadenza';
-  document.getElementById('btn-save').textContent = '💾 Salva';
-  editId = null;
+  document.getElementById('f-title').value='';
+  document.getElementById('f-date').value=new Date().toISOString().slice(0,10);
+  document.getElementById('f-time').value='';
+  document.getElementById('f-notes').value='';
+  document.getElementById('f-cat').value='generico';
+  document.getElementById('f-alert').value='both';
+  document.getElementById('form-hdr-txt').textContent='＋ Nuova scadenza';
+  document.getElementById('btn-save').textContent='💾 Salva';
+  editId=null;
 }
 
 function editScadenza(id) {
-  const s = scadenze[id]; if (!s) return;
-  editId = id;
-  document.getElementById('f-title').value  = s.title;
-  document.getElementById('f-date').value   = s.date;
-  document.getElementById('f-time').value   = s.time || '';
-  document.getElementById('f-cat').value    = s.cat;
-  document.getElementById('f-alert').value  = s.alert;
-  document.getElementById('f-notes').value  = s.notes || '';
-  document.getElementById('form-hdr-txt').textContent = '✏️ Modifica scadenza';
-  document.getElementById('btn-save').textContent = '💾 Aggiorna';
+  const s=scadenze[id]; if(!s)return;
+  editId=id;
+  document.getElementById('f-title').value=s.title;
+  document.getElementById('f-date').value=s.date;
+  document.getElementById('f-time').value=s.time||'';
+  document.getElementById('f-cat').value=s.cat;
+  document.getElementById('f-alert').value=s.alert;
+  document.getElementById('f-notes').value=s.notes||'';
+  document.getElementById('form-hdr-txt').textContent='✏️ Modifica scadenza';
+  document.getElementById('btn-save').textContent='💾 Aggiorna';
   toggleForm(true);
-  window.scrollTo({top:0, behavior:'smooth'});
+  window.scrollTo({top:0,behavior:'smooth'});
 }
 
 function completaScadenza(id) {
-  const s = scadenze[id]; if (!s) return;
-  if (!confirm(`Segnare come completata?\n"${s.title}"`)) return;
-  s.completata = new Date().toISOString().slice(0,10);
-  scadenzeArchivio[id] = s;
+  const s=scadenze[id]; if(!s)return;
+  if(!confirm(`Segnare come completata?\n"${s.title}"`))return;
+  s.completata=new Date().toISOString().slice(0,10);
+  scadenzeArchivio[id]=s;
   delete scadenze[id];
-  syncSave();
-  syncArchive();
+  db.ref('scadenze').set(scadenze);
+  db.ref('archivio').set(scadenzeArchivio);
   showToast('✅ Spostata in archivio');
 }
 
 function eliminaScadenza(id) {
-  const s = scadenze[id]; if (!s) return;
-  if (!confirm(`Eliminare definitivamente?\n"${s.title}"`)) return;
+  const s=scadenze[id]; if(!s)return;
+  if(!confirm(`Eliminare definitivamente?\n"${s.title}"`))return;
   delete scadenze[id];
-  syncSave();
+  db.ref('scadenze').set(scadenze);
   showToast('🗑 Eliminata');
 }
 
 function ripristinaScadenza(id) {
-  const s = scadenzeArchivio[id]; if (!s) return;
-  delete s.completata;
-  scadenze[id] = s;
+  const s=scadenzeArchivio[id]; if(!s)return;
+  delete s.completata; scadenze[id]=s;
   delete scadenzeArchivio[id];
-  syncSave();
-  syncArchive();
-  showToast('↩ Ripristinata nelle attive');
+  db.ref('scadenze').set(scadenze);
+  db.ref('archivio').set(scadenzeArchivio);
+  showToast('↩ Ripristinata');
 }
 
 function eliminaArchiviato(id) {
-  if (!confirm('Eliminare definitivamente dall\'archivio?')) return;
+  if(!confirm('Eliminare definitivamente dall\'archivio?'))return;
   delete scadenzeArchivio[id];
-  syncArchive();
-  render();
-  showToast('🗑 Eliminata dall\'archivio');
+  db.ref('archivio').set(scadenzeArchivio);
+  render(); showToast('🗑 Eliminata dall\'archivio');
 }
 
-/* ═══════════════════════════════════════════════
+/* ══════════════════════════════════════════════
    UI HELPERS
-═══════════════════════════════════════════════ */
-function setFilter(cat, el) {
-  filterCat = cat;
-  document.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
-  el.classList.add('active');
-  render();
+══════════════════════════════════════════════ */
+function setFilter(cat,el) {
+  filterCat=cat;
+  document.querySelectorAll('.pill').forEach(p=>p.classList.remove('active'));
+  el.classList.add('active'); render();
 }
-
-function setView(view, el) {
-  currentView = view;
-  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-  el.classList.add('active');
-  render();
+function setView(view,el) {
+  currentView=view;
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active'); render();
 }
-
 function toggleForm(forceOpen) {
-  const body = document.getElementById('form-body');
-  const chev = document.getElementById('form-chevron');
-  const isOpen = body.classList.contains('open');
-  const shouldOpen = forceOpen !== undefined ? forceOpen : !isOpen;
-  body.classList.toggle('open', shouldOpen);
-  chev.textContent = shouldOpen ? '▴' : '▾';
+  const body=document.getElementById('form-body');
+  const chev=document.getElementById('form-chevron');
+  const open=forceOpen!==undefined?forceOpen:!body.classList.contains('open');
+  body.classList.toggle('open',open);
+  chev.textContent=open?'▴':'▾';
 }
-
 function openStats() {
-  const active = Object.values(scadenze);
-  const byCat = {};
-  Object.keys(CATS).forEach(c => { byCat[c] = active.filter(s=>s.cat===c).length; });
-  const overdue = active.filter(s=>daysTo(s.date)<0);
-  const done = Object.keys(scadenzeArchivio).length;
-  let html = `
+  const active=Object.values(scadenze);
+  const byCat={};
+  Object.keys(CATS).forEach(c=>{byCat[c]=active.filter(s=>s.cat===c).length;});
+  const overdue=active.filter(s=>daysTo(s.date)<0);
+  const done=Object.keys(scadenzeArchivio).length;
+  document.getElementById('stats-content').innerHTML=`
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px">
       ${Object.entries(byCat).map(([c,n])=>`
         <div style="background:#f9fafb;border-radius:8px;padding:10px;display:flex;align-items:center;gap:8px">
           <span style="font-size:20px">${CATS[c].icon}</span>
-          <div>
-            <div style="font-size:13px;color:#6b7280">${CATS[c].label}</div>
-            <div style="font-size:20px;font-weight:700;color:${CATS[c].color}">${n}</div>
-          </div>
+          <div><div style="font-size:13px;color:#6b7280">${CATS[c].label}</div>
+          <div style="font-size:20px;font-weight:700;color:${CATS[c].color}">${n}</div></div>
         </div>`).join('')}
     </div>
-    ${overdue.length ? `<div style="background:#fde8e8;border-radius:8px;padding:12px;margin-bottom:12px;font-size:13px;color:#991b1b">
-      <strong>⚠ ${overdue.length} scadenze scadute:</strong><br>${overdue.map(s=>`• ${s.title} (${formatDate(s.date)})`).join('<br>')}
-    </div>` : ''}
+    ${overdue.length?`<div style="background:#fde8e8;border-radius:8px;padding:12px;margin-bottom:12px;font-size:13px;color:#991b1b">
+      <strong>⚠ ${overdue.length} scadute:</strong><br>${overdue.map(s=>`• ${s.title} (${formatDate(s.date)})`).join('<br>')}
+    </div>`:''}
     <div style="background:#f0fdf4;border-radius:8px;padding:12px;font-size:13px;color:#065f46">
       ✅ Completate e archiviate: <strong>${done}</strong>
     </div>`;
-  document.getElementById('stats-content').innerHTML = html;
   document.getElementById('modal-stats').classList.add('open');
 }
-
-
 function closeModal(id) { document.getElementById(id).classList.remove('open'); }
-
-
 function showToast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg; t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'), 2500);
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2500);
 }
-
-function escHtml(s) {
+function esc(s) {
   return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
-/* ═══════════════════════════════════════════════
+/* ══════════════════════════════════════════════
    VOICE INPUT
-═══════════════════════════════════════════════ */
+══════════════════════════════════════════════ */
 function toggleVoice() {
-  if (!('webkitSpeechRecognition' in window || 'SpeechRecognition' in window)) {
-    showToast('🎤 Usa Chrome (PC) o Safari (iPhone)');
-    return;
+  if(!('webkitSpeechRecognition' in window||'SpeechRecognition' in window)){
+    showToast('🎤 Usa Chrome (PC) o Safari (iPhone)'); return;
   }
-  if (isRecording) { stopVoice(); return; }
-
-  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-  recognition = new SR();
-  recognition.lang = 'it-IT';
-  recognition.interimResults = false;
-  recognition.maxAlternatives = 1;
-
-  recognition.onresult = e => {
-    const text = e.results[0][0].transcript;
-    parseVoice(text);
-    stopVoice();
-  };
-  recognition.onerror = () => stopVoice();
-  recognition.onend   = () => stopVoice();
-  recognition.start();
-
-  isRecording = true;
-  const btn = document.getElementById('mic-btn');
-  btn.classList.add('recording');
-  btn.textContent = '⏹ In ascolto... (tocca per fermare)';
-  document.getElementById('voice-hint').style.display = 'block';
+  if(isRecording){stopVoice();return;}
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  recognition=new SR();
+  recognition.lang='it-IT'; recognition.interimResults=false; recognition.maxAlternatives=1;
+  recognition.onresult=e=>{parseVoice(e.results[0][0].transcript);stopVoice();};
+  recognition.onerror=()=>stopVoice(); recognition.onend=()=>stopVoice();
+  recognition.start(); isRecording=true;
+  const btn=document.getElementById('mic-btn');
+  btn.classList.add('recording'); btn.textContent='⏹ In ascolto...';
+  document.getElementById('voice-hint').style.display='block';
 }
-
 function stopVoice() {
-  isRecording = false;
-  if (recognition) { try{recognition.stop();}catch(e){} }
-  const btn = document.getElementById('mic-btn');
-  btn.classList.remove('recording');
-  btn.textContent = '🎤 Inserimento vocale';
+  isRecording=false; if(recognition){try{recognition.stop();}catch(e){}}
+  const btn=document.getElementById('mic-btn');
+  btn.classList.remove('recording'); btn.textContent='🎤 Inserimento vocale';
 }
-
 function parseVoice(text) {
-  showToast('🎤 "' + text.slice(0,40) + (text.length>40?'…':'') + '"');
-  document.getElementById('f-title').value = text;
-
-  const lower = text.toLowerCase();
-  const mesi = {
-    gennaio:1,febbraio:2,marzo:3,aprile:4,maggio:5,giugno:6,
-    luglio:7,agosto:8,settembre:9,ottobre:10,novembre:11,dicembre:12
-  };
-  const year = new Date().getFullYear();
-
-  for (const [nome, num] of Object.entries(mesi)) {
-    const re = new RegExp('(\\d{1,2})\\s+'+nome+'|'+nome+'\\s+(\\d{1,2})', 'i');
-    const m = lower.match(re);
-    if (m) {
-      const day = parseInt(m[1]||m[2]);
-      document.getElementById('f-date').value = `${year}-${String(num).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
-      break;
-    }
-    if (lower.includes(nome)) {
-      document.getElementById('f-date').value = `${year}-${String(num).padStart(2,'0')}-01`;
-      break;
-    }
+  showToast('🎤 "'+text.slice(0,40)+(text.length>40?'…':'')+'"');
+  document.getElementById('f-title').value=text;
+  const lower=text.toLowerCase();
+  const mesi={gennaio:1,febbraio:2,marzo:3,aprile:4,maggio:5,giugno:6,luglio:7,agosto:8,settembre:9,ottobre:10,novembre:11,dicembre:12};
+  const yr=new Date().getFullYear();
+  for(const[nome,num] of Object.entries(mesi)){
+    const re=new RegExp('(\\d{1,2})\\s+'+nome+'|'+nome+'\\s+(\\d{1,2})','i');
+    const m=lower.match(re);
+    if(m){document.getElementById('f-date').value=`${yr}-${String(num).padStart(2,'0')}-${String(parseInt(m[1]||m[2])).padStart(2,'0')}`;break;}
+    if(lower.includes(nome)){document.getElementById('f-date').value=`${yr}-${String(num).padStart(2,'0')}-01`;break;}
   }
-
-  for (const cat of Object.keys(CATS)) {
-    if (lower.includes(cat) || lower.includes(CATS[cat].label.toLowerCase())) {
-      document.getElementById('f-cat').value = cat;
-      break;
-    }
+  for(const cat of Object.keys(CATS)){
+    if(lower.includes(cat)||lower.includes(CATS[cat].label.toLowerCase())){document.getElementById('f-cat').value=cat;break;}
   }
 }
 
-/* ═══════════════════════════════════════════════
-   SERVICE WORKER (PWA offline)
-═══════════════════════════════════════════════ */
-if ('serviceWorker' in navigator) {
-  const swCode = `
-const CACHE = 'scadenzario-v1';
-self.addEventListener('install', e => e.waitUntil(
-  caches.open(CACHE).then(c => c.addAll(['/']))
-));
-self.addEventListener('fetch', e => e.respondWith(
-  caches.match(e.request).then(r => r || fetch(e.request))
-));`;
-  const blob = new Blob([swCode], {type:'application/javascript'});
-  navigator.serviceWorker.register(URL.createObjectURL(blob)).catch(()=>{});
+/* ══════════════════════════════════════════════
+   SERVICE WORKER PWA
+══════════════════════════════════════════════ */
+if('serviceWorker' in navigator){
+  const sw=`const C='scad-v2';self.addEventListener('install',e=>e.waitUntil(caches.open(C).then(c=>c.addAll(['/scadenze/']))));self.addEventListener('fetch',e=>e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request))));`;
+  navigator.serviceWorker.register(URL.createObjectURL(new Blob([sw],{type:'application/javascript'}))).catch(()=>{});
 }
 
-/* ═══════════════════════════════════════════════
-   INIT
-═══════════════════════════════════════════════ */
-document.getElementById('f-date').value = new Date().toISOString().slice(0,10);
-
-// Chiudi modal cliccando sfondo
-document.querySelectorAll('.modal-bg').forEach(m => {
-  m.addEventListener('click', e => { if(e.target===m) m.classList.remove('open'); });
+document.querySelectorAll('.modal-bg').forEach(m=>{
+  m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('open');});
 });
-
-initFirebase();
+document.getElementById('reset-bg').addEventListener('click',e=>{if(e.target===document.getElementById('reset-bg'))closeReset();});
+document.getElementById('chpwd-bg').addEventListener('click',e=>{if(e.target===document.getElementById('chpwd-bg'))closeChpwd();});
 </script>
 </body>
 </html>
